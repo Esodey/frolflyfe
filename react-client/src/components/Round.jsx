@@ -9,7 +9,8 @@ class Round extends React.Component {
       view: 'notloaded',
       players: this.props.players,
       holeNumber: 1,
-      course: this.props.course
+      course: this.props.course,
+      scoresAdded: 0
     }
     this.renderTableData = this.renderTableData.bind(this);
     this.renderTableHeader = this.renderTableHeader.bind(this);
@@ -17,7 +18,7 @@ class Round extends React.Component {
     this.totalScore = this.totalScore.bind(this);
   }
 
-  //hash
+  // go back and refactor to hash
   componentDidMount() {
     this.state.players.map(player => {
         const { name } = player;
@@ -65,25 +66,37 @@ class Round extends React.Component {
     })
  }
 
-  totalScore(name) {
-      for (var i = 0; i < name.length - 1; i++) {
-        name[name.length -1] += name[i];
+  totalScore(name, scores) {
+      let ts = 0;
+      for (var i = 0; i < scores.length - 2; i++) {
+        ts += Number(scores[i]);
       }
+      
+      scores[scores.length - 1] = ts;
+      this.setState({
+          [name] : scores
+      });
   }
 
  addScore(name, score) {
      const scores = [...this.state[name]];
      scores[this.state.holeNumber - 1] = score;
-     console.log(this.state.holeNumber)
-    this.setState({
-      [name]: scores,
-      holeNumber: this.state.holeNumber + 1
-    });
-    this.totalScore(name);
+     if (this.state.scoresAdded === this.state.players.length -1) {
+         this.setState({
+            [name]: scores,
+            holeNumber: this.state.holeNumber + 1,
+            scoresAdded: 0
+         }, () => this.totalScore(name, scores))
+     } else {
+         this.setState({
+           [name]: scores,
+           scoresAdded: this.state.scoresAdded + 1
+         }, () => this.totalScore(name, scores));
+     }
  }
 
   render () {
-      if (this.state.view === 'loaded') {
+      if (this.state.view === 'loaded' && this.state.holeNumber !== 19) {
           return (
             <div>
                 <h1 className='h1'>Frolf Lyfe</h1>
@@ -100,14 +113,22 @@ class Round extends React.Component {
                 {this.state.players.map(player => {
                     const { name } = player;
                     return (
-                        <UpdateScore name={name} key={name} addScore={this.addScore} ts={this.state[name][18]}/>
+                        <UpdateScore name={name} key={name} addScore={this.addScore} />
                     )
                 })}
             </div>
           )
+      } 
+      else if (this.state.holeNumber === 19) {
+          return (
+            <div>
+              <h1 className='h1'>Thank you for playing!</h1>
+              <button className='submitScores'>Please Submit Your Scores</button>
+            </div>
+        )
       } else {
         return (
-            <div></div>
+          <div></div>
         )
       }
   }

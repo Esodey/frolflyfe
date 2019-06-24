@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import PlayersInRound from './components/PlayersInRound.jsx';
 import Round from './components/Round.jsx'
+import Stats from './components/Stats.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
     this.startRound = this.startRound.bind(this);
+    this.getStats = this.getStats.bind(this);
   }
 
   componentDidMount() {
@@ -57,6 +59,15 @@ class App extends React.Component {
     })
   }
 
+  getStats(event) {
+    event.preventDefault();
+    this.setState({
+      view: 'stats'
+    })
+  }
+
+
+
   render () {
     if (this.state.view === 'Main') {
       return (
@@ -83,7 +94,10 @@ class App extends React.Component {
               </label>
               <div>
                 <button className='addPlayer' onClick={this.addPlayer}>Submit</button>
+                <span>
+                <button className='stats' onClick={this.getStats}>Get Stats</button>
                 <button className='startRound' onClick={this.startRound}>Start Round!</button>
+                </span>
               </div>
             </form>
             <div className='players'>
@@ -100,6 +114,13 @@ class App extends React.Component {
       return (
         <div>
           <Round players={this.state.players} course={this.state.course}/>
+        </div>
+      )
+    }
+    if (this.state.view === 'stats') {
+      return (
+        <div>
+          <Stats />
         </div>
       )
     }
