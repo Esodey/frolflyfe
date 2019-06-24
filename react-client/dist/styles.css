@@ -1,0 +1,121 @@
+html {
+    background-color: green;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.h1 {
+    font-size: 80px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: rgb(223, 210, 19);
+    text-align: center;
+    /* border-left-width: 80%; */
+    
+}
+
+h3 {
+    color: rgb(255, 140, 0);
+    font-size: 30px;
+    margin-left: 30px;
+}
+
+.image {
+    position:  fixed;
+    top: 100px;
+    right: 50px;
+}
+
+.userInput {
+    width: 50%;
+    margin: 0px;
+}
+
+label {
+    padding: 10px;
+    font-size: 30px;
+}
+
+input {
+    margin-left: 10px;
+    border: 2px solid rgb(0, 38, 255);
+    width: 200px;
+    height: 30px;
+    background-color: rgb(0, 187, 255);
+    font-size: 25px;
+    font-family: 'Lucida Grande'
+}
+
+.addPlayer {
+    background-color: orange;
+    width: 200px;
+    height: 50px;
+    margin: 10px;
+    margin-left: 250px;
+    margin-top: 50px;
+    font-size: 30px;
+    font-family: 'Lucida Grande';
+}
+
+.startRound {
+    background-color: rgb(55, 255, 0);
+    width: 300px;
+    height: 150px;
+    margin: 10px;
+    margin-left: 200px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-size: 60px;
+    font-family: 'Lucida Grande';
+}
+
+.players {
+    background-color: rgb(37, 82, 194);
+    width: 120%;
+    height: 150px;
+    font-size: 30px;
+    font-family: 'Lucida Grande';
+    display: flexbox;
+    flex-wrap: wrap;
+}
+
+table {
+    border: 10px solid;
+    border-color: blue;
+    margin: 15px;
+    width: 70%;
+
+}
+
+tr {
+    border: 1px solid black;
+    background-color: rgb(0, 187, 255);
+    height: 50px;
+    width: 50px;
+    font-size: 30px;
+    font-family: 'Lucida Grande';
+}
+
+td {
+    border: 1px solid black;
+    border-color: blue;
+}
+
+.scores {
+    margin: 15px;
+    background-color: orange;
+    width: 200px;
+    height: 50px;
+    font-size: 30px;
+    font-family: 'Lucida Grande';
+}
+
+/* #app {
+    width: 100%;
+    height: 100%;
+
+} */
+
+
+/* 
+.main {
+    /* background-color: green; */
+/* } */ 
