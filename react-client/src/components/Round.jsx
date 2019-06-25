@@ -1,5 +1,6 @@
 import React from 'react';
 import UpdateScore from './UpdateScore.jsx';
+import $ from 'jquery';
 
 
 class Round extends React.Component {
@@ -16,6 +17,7 @@ class Round extends React.Component {
     this.renderTableHeader = this.renderTableHeader.bind(this);
     this.addScore = this.addScore.bind(this);
     this.totalScore = this.totalScore.bind(this);
+    this.submitScores = this.submitScores.bind(this);
   }
 
   // go back and refactor to hash
@@ -71,7 +73,6 @@ class Round extends React.Component {
       for (var i = 0; i < scores.length - 2; i++) {
         ts += Number(scores[i]);
       }
-      
       scores[scores.length - 1] = ts;
       this.setState({
           [name] : scores
@@ -93,6 +94,23 @@ class Round extends React.Component {
            scoresAdded: this.state.scoresAdded + 1
          }, () => this.totalScore(name, scores));
      }
+ }
+
+ //will eventually submit scores per hole as they are completed
+ submitScores() {
+  let dataArray = [];
+  for (var i = 0; i < this.state.players.length; i++) {
+    dataArray.push({player: this.state.players[i].name, course: this.state.course, score: this.state[this.state.players[i].name]})
+    console.log(dataArray);
+  }
+  $.ajax({
+    type: 'POST',
+    url: '/scores',
+    data: dataArray,
+    sucess: () => {
+      console.log('Sucess!')
+    }
+  })
  }
 
   render () {
@@ -123,7 +141,7 @@ class Round extends React.Component {
           return (
             <div>
               <h1 className='h1'>Thank you for playing!</h1>
-              <button className='submitScores'>Please Submit Your Scores</button>
+              <button className='submitScores' onClick={this.submitScores}>Please Submit Your Scores</button>
             </div>
         )
       } else {

@@ -1,13 +1,16 @@
 import React from 'react';
+import PlayerStats from './PlayerStats.jsx'
 
 
 class Stats extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-        value: ''
+        value: '',
+        playerStats: []
     }
     this.handleChange = this.handleChange.bind(this);
+    this.getStats = this.getStats.bind(this);
   }
   
   handleChange(event) {
@@ -19,6 +22,18 @@ class Stats extends React.Component {
     });
   }
 
+  getStats() {
+    $.ajax({
+      type: 'POST',
+      url: '/scores',
+      data: this.state.value,
+      sucess: () => {
+        console.log('Sucess!')
+      }
+    })
+  }
+  
+
   render() {
       return (
         <div>
@@ -27,13 +42,15 @@ class Stats extends React.Component {
             <form>
                 <label>Please Enter A Players Name:</label>
                 <input onChange={this.handleChange}></input>
-                <button className='search'>Search</button>
+                <button className='search' onClick={this.getStats}>Search</button>
                 <div>
                     <label>Please Select Stat:</label>
                     <select></select>
                 </div>
             </form>
-            <div className='display' >Stats:</div>
+            <div className='display' >Stats:
+              <PlayerStats stats={this.state.playerStats} />
+            </div>
         </div>
       )
   }
