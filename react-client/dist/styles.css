@@ -8,12 +8,39 @@ html {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: rgb(223, 210, 19);
     text-align: center;
+    margin-bottom: 20px;
+}
+
+.navBar {
+    text-align: center;
+    width: 30%;
+    height: 50px;
+    margin-left: 500px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.tab {
+    background-color: rgb(37, 82, 194);
+    border: none;
+    margin: none;
+    padding: 10px;
+    width: 30%;
+    font-family:'Lucida Grande';
+    color: white;
+    font-size: 30px;
+    cursor: pointer;
 }
 
 h3 {
     color: rgb(255, 140, 0);
     font-size: 30px;
     margin-left: 30px;
+    display: inline;
+}
+
+.options{
+    margin-left: 200px;
 }
 
 .display {
@@ -117,6 +144,28 @@ select {
     font-size: 60px;
     font-family: 'Lucida Grande';
 }
+
+.gameType {
+    background-color: rgb(162, 0, 255);
+    width: 200px;
+    height: 66px;
+    margin: 10px;
+    font-size: 30px;
+    font-family: 'Lucida Grande';
+}
+
+.gameType:focus {
+    background-color: yellow;
+    width: 200px;
+    height: 66px;
+    margin: 10px;
+    /* margin-left: 200px;
+    margin-top: 30px;
+    margin-bottom: 15px; */
+    font-size: 30px;
+    font-family: 'Lucida Grande';
+}
+
 
 .players {
     background-color: rgb(37, 82, 194);

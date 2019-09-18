@@ -27,7 +27,8 @@ class UpdateScore extends React.Component {
   render() {
       return (
         <div>
-            <input name={this.props.name}  value={this.state.currentValue} placeholder={this.props.name + `'s Score`} onChange={this.handleChange}></input>
+          <h3>{this.props.name}</h3>
+            <input name={this.props.name}  value={this.state.currentValue} placeholder={'Fill In Score'}  onChange={this.handleChange}></input>
             <button className='scores' onClick={this.addScore}>Add Score</button>
         </div>      
       )

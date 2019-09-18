@@ -1,6 +1,12 @@
 import React from 'react';
-import PlayerStats from './PlayerStats.jsx'
+import PlayerStats from './PlayerStats.jsx';
+import $ from 'jquery';
 
+const States = {
+  main: 'main',
+  round: 'round',
+  stats: 'stats'
+}
 
 class Stats extends React.Component {
   constructor(props) {
@@ -22,16 +28,16 @@ class Stats extends React.Component {
     });
   }
 
-  getStats() {
-    $.ajax({
-      type: 'POST',
-      url: '/scores',
-      data: this.state.value,
-      sucess: () => {
-        console.log('Sucess!')
-      }
-    })
-  }
+  // getStats() {
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: '/scores',
+  //     data: this.state.value,
+  //     sucess: () => {
+  //       console.log('Sucess!')
+  //     }
+  //   })
+  // }
   
 
   render() {
@@ -39,6 +45,9 @@ class Stats extends React.Component {
         <div>
             <h1 className='h1'>Frolf Lyfe Stats</h1>
             <img src='./basket.png' alt="Basket" className='image'/>
+            <button className='tab' name={States.main} onClick={this.props.changeView}>Home</button>
+            <button className='tab' name={States.round} onClick={this.props.changeView}>Round</button>
+            <button className='tab' name={States.stats} onClick={this.props.changeView}>Stats</button>
             <form>
                 <label>Please Enter A Players Name:</label>
                 <input onChange={this.handleChange}></input>

@@ -5,6 +5,12 @@ import PlayersInRound from './components/PlayersInRound.jsx';
 import Round from './components/Round.jsx'
 import Stats from './components/Stats.jsx';
 
+const States = {
+  main: 'main',
+  round: 'round',
+  stats: 'stats'
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -12,12 +18,11 @@ class App extends React.Component {
       currentPlayer: '',
       players: [],
       course: '',
-      view: 'Main'
+      view: States.main
     }
     this.handleChange = this.handleChange.bind(this);
     this.addPlayer = this.addPlayer.bind(this);
-    this.startRound = this.startRound.bind(this);
-    this.getStats = this.getStats.bind(this);
+    this.changeView = this.changeView.bind(this);
   }
 
   componentDidMount() {
@@ -38,7 +43,6 @@ class App extends React.Component {
     const target = event.target;
     const value = target.value;
     const name = target.name;
-
     this.setState({
       [name]: value
     });
@@ -46,33 +50,39 @@ class App extends React.Component {
 
   addPlayer(event) {
     event.preventDefault();
-    this.state.players.push({name: this.state.currentPlayer, course: this.state.course});
+    this.state.players.push({
+      name: this.state.currentPlayer, 
+      course: this.state.course,
+      scores: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      matchTotal: 0,
+      strokeTotal: 0,
+      skinsTotal: 0
+    })
     this.setState({
       currentPlayer: ''
-    })
+    });
   }
 
-  startRound(event) {
+  changeView(event) {
     event.preventDefault();
+    const target = event.target;
+    const name = target.name;
     this.setState({
-      view: 'round'
-    })
+      view: name
+    });
   }
-
-  getStats(event) {
-    event.preventDefault();
-    this.setState({
-      view: 'stats'
-    })
-  }
-
 
 
   render () {
-    if (this.state.view === 'Main') {
+    if (this.state.view === States.main) {
       return (
         <div className='main'>
           <h1 className='h1'>Frolf Lyfe</h1>
+          <div className='navBar'>
+            <button className='tab' name={States.main} onClick={this.changeView}>Home</button>
+            <button className='tab' name={States.round} onClick={this.changeView}>Round</button>
+            <button className='tab' name={States.stats} onClick={this.changeView}>Stats</button>
+          </div>
           <h3>Please Enter Your Players and Course</h3>
           <div className='userInput'>
             <form>
@@ -94,10 +104,7 @@ class App extends React.Component {
               </label>
               <div>
                 <button className='addPlayer' onClick={this.addPlayer}>Submit</button>
-                <span>
-                <button className='stats' onClick={this.getStats}>Get Stats</button>
-                <button className='startRound' onClick={this.startRound}>Start Round!</button>
-                </span>
+                <button className='startRound' name={States.round} onClick={this.changeView}>Start Round!</button>
               </div>
             </form>
             <div className='players'>
@@ -110,17 +117,18 @@ class App extends React.Component {
         </div>
       )
     }
-    if (this.state.view === 'round') {
+    if (this.state.view === States.round) {
       return (
         <div>
-          <Round players={this.state.players} course={this.state.course}/>
+          <Round players={this.state.players} course={this.state.course}
+            changeView={this.changeView} />
         </div>
       )
     }
-    if (this.state.view === 'stats') {
+    if (this.state.view === States.stats) {
       return (
         <div>
-          <Stats />
+          <Stats changeView={this.changeView}/>
         </div>
       )
     }
