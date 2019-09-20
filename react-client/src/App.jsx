@@ -74,64 +74,74 @@ class App extends React.Component {
 
 
   render () {
+    let view;
     if (this.state.view === States.main) {
-      return (
-        <div className='main'>
-          <h1 className='h1'>Frolf Lyfe</h1>
-          <div className='navBar'>
-            <button className='tab' name={States.main} onClick={this.changeView}>Home</button>
-            <button className='tab' name={States.round} onClick={this.changeView}>Round</button>
-            <button className='tab' name={States.stats} onClick={this.changeView}>Stats</button>
+      view = 
+        <div className='userInput'>
+          <div>
+            <h3>Please Enter Your Players and Course</h3>
           </div>
-          <h3>Please Enter Your Players and Course</h3>
-          <div className='userInput'>
-            <form>
-              <label>Player:
-                <input 
-                  name='currentPlayer' 
-                  value={this.state.currentPlayer} 
-                  type='text'
-                  onChange={this.handleChange}>
-                </input>
-              </label>
-              <label>Course:
-                <input 
-                  name='course' 
-                  value={this.state.course} 
-                  type='text' 
-                  onChange={this.handleChange}>
-                </input>
-              </label>
-              <div>
-                <button className='addPlayer' onClick={this.addPlayer}>Submit</button>
-                <button className='startRound' name={States.round} onClick={this.changeView}>Start Round!</button>
-              </div>
-            </form>
-            <div className='players'>
-              <PlayersInRound totalPlayers={this.state.players}/>
-            </div>
+          <form>
+            <label>Player:
+              <input 
+                name='currentPlayer' 
+                value={this.state.currentPlayer} 
+                type='text'
+                onChange={this.handleChange}>
+              </input>
+            </label>
+            <label>Course:
+              <input 
+                name='course' 
+                value={this.state.course} 
+                type='text' 
+                onChange={this.handleChange}>
+              </input>
+            </label>
+            <button className='addPlayer' onClick={this.addPlayer}>Submit</button>
+          </form>
+          <div className='players'>
+            <PlayersInRound totalPlayers={this.state.players}/>
           </div>
-          <div className='image'>
-            <img src='./basket.png' alt="Basket" className='basket'/>
-          </div>
+          <button 
+            className='startRound' 
+            name={States.round} 
+            onClick={this.changeView}>Start Round!
+          </button>
         </div>
-      )
     }
-    if (this.state.view === States.round) {
-      return (
+    else if (this.state.view === States.round) {
+      view = 
         <div>
           <Round players={this.state.players} course={this.state.course}
             changeView={this.changeView} />
         </div>
-      )
     }
-    if (this.state.view === States.stats) {
-      return (
+    else if (this.state.view === States.stats) {
+      view = 
         <div>
           <Stats changeView={this.changeView}/>
         </div>
-      )
     }
+
+    return (
+      <div className='main'>
+        <div className='title'>
+          <h1 className='h1'>Frolf Lyfe</h1>
+        </div>
+        <div className='navBar'>
+          <button className='tab' name={States.main} onClick={this.changeView}>Home</button>
+          <button className='tab' name={States.round} onClick={this.changeView}>Round</button>
+          <button className='tab' name={States.stats} onClick={this.changeView}>Stats</button>
+        </div>
+        <div className='body'>
+          <div className='image'>
+            <img src='./basket.png' alt="Basket" className='basket'/>
+          </div>
+          {view}
+        </div>
+      </div>
+    )
   }
 }
 

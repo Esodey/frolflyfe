@@ -3,19 +3,29 @@ html {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
 
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    text-align: center;
+}
+
 .h1 {
     font-size: 80px;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     color: rgb(223, 210, 19);
-    text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    margin-top: 20px;
 }
 
 .navBar {
     text-align: center;
     width: 30%;
     height: 50px;
-    margin-left: 500px;
+    margin: auto;
+    margin-bottom: 0;
     display: flex;
     justify-content: space-between;
 }
@@ -30,6 +40,10 @@ html {
     color: white;
     font-size: 30px;
     cursor: pointer;
+}
+
+.body {
+    display: flex;
 }
 
 h3 {
@@ -64,15 +78,13 @@ h3 {
 }
 
 .image {
-    position:  fixed;
-    top: 100px;
-    right: 50px;
+    flex: 1;
+    order: 2;
+    text-align: right;
 }
 
-.userInput {
-    width:70%;
-    margin: 0px;
-}
+/* .userInput {
+} */
 
 .search {
     background-color: orange;
@@ -86,7 +98,7 @@ h3 {
 }
 
 label {
-    padding: 10px;
+    padding: 5px;
     font-size: 30px;
 }
 
@@ -115,7 +127,7 @@ select {
     width: 200px;
     height: 50px;
     margin: 10px;
-    margin-left: 250px;
+    margin-left: 70px;
     margin-top: 25px;
     font-size: 30px;
     font-family: 'Lucida Grande';
@@ -169,12 +181,10 @@ select {
 
 .players {
     background-color: rgb(37, 82, 194);
-    width: 120%;
+    width: 80%;
     height: 150px;
     font-size: 30px;
     font-family: 'Lucida Grande';
-    display: flexbox;
-    flex-wrap: wrap;
 }
 
 table {
@@ -206,4 +216,11 @@ td {
     height: 50px;
     font-size: 30px;
     font-family: 'Lucida Grande';
+}
+
+.noPlayers {
+    padding: 20px;
+    margin-top: 50px;
+    font-size: 50px;
+    color: white;
 }

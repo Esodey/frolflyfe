@@ -28,11 +28,8 @@ class Round extends React.Component {
   }
 
   componentDidMount() {
-    // this.state.players.map(player => {
-    //     const { name } = player;
         this.setState({
             view: 'loaded',
-            // [players[name]]: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         });
   }
 
@@ -257,16 +254,11 @@ class Round extends React.Component {
  }
 
   render () {
-      if (this.state.view === 'loaded' && this.state.holeNumber !== 19) {
+      if ((this.state.view === 'loaded' 
+        && this.state.holeNumber !== 19) 
+        && this.state.players.length !== 0) {
           return (
-            <div>
-                <h1 className='h1'>Frolf Lyfe</h1>
-            <div className='image'>
-                <button className='tab' name={States.main} onClick={this.props.changeView}>Home</button>
-                <button className='tab' name={States.round} onClick={this.props.changeView}>Round</button>
-                <button className='tab' name={States.stats} onClick={this.props.changeView}>Stats</button>
-                {/* <img src='./basket.png' alt="Basket" className='basket'/> */}
-            </div>
+           <div>
                 <div>
                     <h3>Course: {this.state.course}</h3>
                     <span className='options'>
@@ -299,18 +291,8 @@ class Round extends React.Component {
             </div>
         )
       } else {
-        return (
-          <div>
-            <h1 className='h1'>Frolf Lyfe</h1>
-            <div className='image'>
-                <button className='tab' name={States.main} onClick={this.props.changeView}>Home</button>
-                <button className='tab' name={States.round} onClick={this.props.changeView}>Round</button>
-                <button className='tab' name={States.stats} onClick={this.props.changeView}>Stats</button>
-                <img src='./basket.png' alt="Basket" className='basket'/>
-            </div>
-            <div>Round Has Not Been Started</div>
-          </div>
-        )
+        return <div className='noPlayers'> Round Has Not Been Started. 
+          Please Go Back To The Home Page And Add At Least One Player</div>
       }
   }
 };

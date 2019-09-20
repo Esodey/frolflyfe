@@ -16,7 +16,7 @@ class Stats extends React.Component {
         playerStats: []
     }
     this.handleChange = this.handleChange.bind(this);
-    this.getStats = this.getStats.bind(this);
+    // this.getStats = this.getStats.bind(this);
   }
   
   handleChange(event) {
@@ -43,23 +43,18 @@ class Stats extends React.Component {
   render() {
       return (
         <div>
-            <h1 className='h1'>Frolf Lyfe Stats</h1>
-            <img src='./basket.png' alt="Basket" className='image'/>
-            <button className='tab' name={States.main} onClick={this.props.changeView}>Home</button>
-            <button className='tab' name={States.round} onClick={this.props.changeView}>Round</button>
-            <button className='tab' name={States.stats} onClick={this.props.changeView}>Stats</button>
-            <form>
-                <label>Please Enter A Players Name:</label>
-                <input onChange={this.handleChange}></input>
-                <button className='search' onClick={this.getStats}>Search</button>
-                <div>
-                    <label>Please Select Stat:</label>
-                    <select></select>
-                </div>
-            </form>
-            <div className='display' >Stats:
-              <PlayerStats stats={this.state.playerStats} />
+          <form>
+            <label>Please Enter A Players Name:</label>
+            <input onChange={this.handleChange}></input>
+            <button className='search' onClick={this.getStats}>Search</button>
+            <div>
+              <label>Please Select Stat:</label>
+              <select></select>
             </div>
+          </form>
+          <div className='display' >Stats:
+            <PlayerStats stats={this.state.playerStats} />
+          </div>
         </div>
       )
   }
