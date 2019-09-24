@@ -9,7 +9,7 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
-app.use(express.static(__dirname + '/../react-client/dist'));
+app.use(express.static(__dirname + '/../react/dist'));
 
 
 app.post('/scores', (req, res) => {

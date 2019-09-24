@@ -53,7 +53,7 @@ class App extends React.Component {
     this.state.players.push({
       name: this.state.currentPlayer, 
       course: this.state.course,
-      scores: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+      scores: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
       matchTotal: 0,
       strokeTotal: 0,
       skinsTotal: 0

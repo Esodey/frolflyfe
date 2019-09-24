@@ -1,6 +1,6 @@
 import React from 'react';
 import UpdateScore from './UpdateScore.jsx';
-import $ from 'jquery';
+// import $ from 'jquery';
 
 const States = {
   main: 'main',
@@ -18,13 +18,14 @@ class Round extends React.Component {
       course: this.props.course,
       scoresAdded: 0,
       gameType: '',
+      skinsScore: 1
     }
     this.renderTableData = this.renderTableData.bind(this);
     this.renderTableHeader = this.renderTableHeader.bind(this);
-    this.addScore = this.addScore.bind(this);
     this.totalScore = this.totalScore.bind(this);
-    // this.submitScores = this.submitScores.bind(this);
     this.gameType = this.gameType.bind(this);
+    this.addScores = this.addScores.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
@@ -64,6 +65,7 @@ class Round extends React.Component {
     if (this.state.gameType === '') {
       return this.state.players.map(player => {
          const { name } = player;
+        //  console.log(player[scores][0]);
          return (
             <tr key={name + this.state.holeNumber}>
                <td key={name}>{ name }</td>
@@ -145,7 +147,7 @@ class Round extends React.Component {
                <td key='17' id='17'>{player.scores[16]}</td>
                <td key='18' id='18'>{player.scores[17]}</td>
                <td key='ts' id='totalScore'>{player.scores[18]}</td>
-              <td key='mp' id='mp'>{player.scores[20]}</td>
+              <td key='mp' id='mp'>{player.matchTotal}</td>
            </tr>
         )
      })
@@ -175,7 +177,7 @@ class Round extends React.Component {
                <td key='17' id='17'>{player.scores[16]}</td>
                <td key='18' id='18'>{player.scores[17]}</td>
                <td key='ts' id='totalScore'>{player.scores[18]}</td>
-              <td key='skins' id='skins'>{player.scores[21]}</td>
+              <td key='skins' id='skins'>{player.skinsTotal}</td>
            </tr>
         )
      })
@@ -196,36 +198,73 @@ class Round extends React.Component {
       scores[18] = ts;
       scores[19] = ts - currentPar;
       this.setState({
-          [name] : scores
       });
   }
 
- addScore(name, score) {
-     const scores = [...this.state[name]];
-     scores[this.state.holeNumber - 1] = score;
-     if (this.state.scoresAdded === this.state.players.length -1) {
-         this.setState({
-            [name]: scores,
-            holeNumber: this.state.holeNumber + 1,
-            scoresAdded: 0
-         }, () => this.totalScore(name, scores)
-         )
-     } else {
-         this.setState({
-           [name]: scores,
-           scoresAdded: this.state.scoresAdded + 1
-         }, () => this.totalScore(name, scores)
-         );
+ addScores(name, score) {
+   for (var i = 0; i < this.state.players.length; i++) {
+     if (this.state.players[i]['name'] === name) {
+      const player = this.state.players[i];
+      const scores = [...this.state.players[i]['scores']];
+      scores[this.state.holeNumber - 1] = score;
+      this.state.players[i]['scores'] = scores;
+      // console.log(player);
+      // console.log(scores);
+          this.setState({
+            // [player]['scores'] : scores
+          }, () => this.totalScore(name, scores)
+          )
      }
+   }
  }
 
-//  matchPlayScores() {
-//    let scoresArray = []
-//    for (var i = 0; i < this.state.players.length; i++) {
-//      scoresArray.push(this.state[this.state.players[i].name])
-//    }
-//   }
-
+ handleSubmit (event) {
+  event.preventDefault();
+  const data = new FormData(event.target);
+  let minScore = 0;
+  const playerScoreObj = {};
+  const scoreObj = {};
+  for(var pair of data.entries()) {
+    let name = pair[0];
+    let score = pair[1];
+    playerScoreObj[name] = score;
+    if (!scoreObj[score]) {
+      scoreObj[score] = 1;
+    } else {
+      scoreObj[score] = scoreObj[score] + 1;
+    }
+    this.addScores(name, score);
+  }
+  for (var player in playerScoreObj) {
+    if (playerScoreObj[player] < minScore || minScore === 0) {
+      minScore = playerScoreObj[player];
+    }
+  }
+  if (scoreObj[minScore] === 1) {
+    for (var player in playerScoreObj) {
+      if (playerScoreObj[player] === minScore) {
+        for (var i = 0; i < this.state.players.length; i++) {
+          if (this.state.players[i]['name'] === player) {
+            this.state.players[i]['matchTotal'] = this.state.players[i]['matchTotal'] + 1;
+            this.state.players[i]['skinsTotal'] = this.state.players[i]['skinsTotal'] + this.state.skinsScore;
+            console.log(scoreObj);
+            this.setState({
+              skinsScore : 1,
+              holeNumber: this.state.holeNumber + 1,
+            })
+          }
+        }
+      }
+    }
+  } else {
+    this.setState({
+      skinsScore : this.state.skinsScore + 1,
+      holeNumber: this.state.holeNumber + 1,
+    })
+  }
+  
+  // console.log(playerScoreObj);
+ }
 
  //will eventually submit scores per hole as they are completed
 //  submitScores() {
@@ -273,13 +312,23 @@ class Round extends React.Component {
                     {this.renderTableData()}
                     </tbody>
                 </table>
-                {this.state.players.map(player => {
+                <form onSubmit={this.handleSubmit}>
+                  {this.state.players.map(player => {
                     const { name } = player;
                     return (
-                        <UpdateScore name={name} key={name} gameType={this.gameType} 
-                          addScore={this.addScore} />
+                      <UpdateScore 
+                        name={name} key={name} 
+                        gameType={this.gameType} 
+                       />
                     )
-                })}
+                  })}
+                  <label> Submit Scores
+                    <input 
+                    type="submit" 
+                    value="Submit" 
+                    className='scores' />
+                  </label> 
+                </form>
             </div>
           )
       } 

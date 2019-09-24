@@ -8,7 +8,6 @@ class UpdateScore extends React.Component {
         currentValue: ''
     }
     this.handleChange = this.handleChange.bind(this);
-    this.addScore = this.addScore.bind(this);
   }
 
   handleChange(event) {
@@ -20,17 +19,14 @@ class UpdateScore extends React.Component {
     });
   }
 
-  addScore() {
-      this.props.addScore(this.props.name, this.state.currentValue);
-  }
-
   render() {
       return (
-        <div>
-          <h3>{this.props.name}</h3>
-            <input name={this.props.name}  value={this.state.currentValue} placeholder={'Fill In Score'}  onChange={this.handleChange}></input>
-            <button className='scores' onClick={this.addScore}>Add Score</button>
-        </div>      
+          <label>{this.props.name}
+            <input name={this.props.name}  
+              value={this.state.currentValue} 
+              placeholder={'Fill In Score'}  
+              onChange={this.handleChange} />
+          </label> 
       )
   }
 }
